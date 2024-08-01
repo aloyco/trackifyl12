@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackify Insight</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(to right, #ffe6f7, #fff0f5);
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+        .sidebar .logo {
+            font-family: 'Chewy', cursive;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #6a00ff;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background: linear-gradient(to right, #ffe6f7, #fff0f5);
+        }
+        .welcome {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: #ffe6f7;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .balance-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f0e6ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .balance-card .amount {
+            font-size: 30px;
+        }
+        .balance-card .edit-btn {
+            margin-left: 10px;
+            background: #ddd;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .balance-card .edit-btn:hover {
+            background: #ccc;
+        }
+        .balance-section {
+            margin-bottom: 20px;
+        }
+        .add-btn {
+            background: #ddd;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .add-btn:hover {
+            background: #ccc;
+        }
+        .add-form {
+            display: none;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        .add-form input, .add-form select {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .add-form button {
+            background: #6a00ff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-form button:hover {
+            background: #8000ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">Trackify</div>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="#">Insight</a>
+        <a href="#">Trackify Wallet</a>
+        <a href="#">Transaction</a>
+        <a href="#">Account</a>
+        <a href="#">Settings</a>
+        <a href="#">Tips</a>
+        <a href="#">Logout</a>
+        <a href="#">Help</a>
+    </div>
+    <div class="main-content">
+        <div class="welcome">Welcome, John Doe.</div>
+        <div class="balance-section">
+            <h2>Your balances</h2>
+            <div class="balance-card">
+                <div>
+                    <h2>Trackify Wallet</h2>
+                </div>
+                <div class="amount" id="wallet-balance">$0.00</div>
+            </div>
+            <div class="balance-card">
+                <div>
+                    <h2>Bank Accounts</h2>
+                    <button class="add-btn" onclick="toggleForm('add-account-form')">Add accounts</button>
+                    <div class="add-form" id="add-account-form">
+                        <input type="text" placeholder="Bank Name" id="bank-name">
+                        <input type="number" placeholder="Balance" id="bank-balance">
+                        <button onclick="addAccount()">Add</button>
+                    </div>
+                    <div id="bank-accounts-list"></div>
+                </div>
+                <div class="amount" id="bank-total">$0.00</div>
+            </div>
+            <div class="balance-card">
+                <div>
+                    <h2>Credit Cards</h2>
+                    <button class="add-btn" onclick="toggleForm('add-card-form')">Add cards</button>
+                    <div class="add-form" id="add-card-form">
+                        <input type="text" placeholder="Card Name" id="card-name">
+                        <input type="text" placeholder="Bank Name" id="card-bank">
+                        <input type="number" placeholder="Balance" id="card-balance">
+                        <button onclick="addCard()">Add</button>
+                    </div>
+                    <div id="credit-cards-list"></div>
+                </div>
+                <div class="amount" id="card-total">$0.00</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let bankTotal = 0;
+        let cardTotal = 0;
+
+        function toggleForm(formId) {
+            const form = document.getElementById(formId);
+            form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function addAccount() {
+            const bankName = document.getElementById('bank-name').value;
+            const bankBalance = parseFloat(document.getElementById('bank-balance').value);
+            bankTotal += bankBalance;
+
+            const accountDiv = document.createElement('div');
+            accountDiv.classList.add('balance-card');
+            accountDiv.innerHTML = `
+                <div>
+                    <div>${bankName}</div>
+                    <button class="edit-btn" onclick="editBalance(this, 'bank')">Edit</button>
+                </div>
+                <div class="amount">$${bankBalance.toFixed(2)}</div>
+            `;
+            document.getElementById('bank-accounts-list').appendChild(accountDiv);
+
+            updateTotal('bank-total', bankTotal);
+
+            document.getElementById('bank-name').value = '';
+            document.getElementById('bank-balance').value = '';
+            toggleForm('add-account-form');
+
+            // Save balance for this user
+            saveBalance(bankName, bankBalance);
+        }
+
+        function addCard() {
+            const cardName = document.getElementById('card-name').value;
+            const cardBank = document.getElementById('card-bank').value;
+            const cardBalance = parseFloat(document.getElementById('card-balance').value);
+            cardTotal += cardBalance;
+
+            const cardDiv = document.createElement('div');
+            cardDiv.classList.add('balance-card');
+            cardDiv.innerHTML = `
+                <div>
+                    <div>${cardName} (${cardBank})</div>
+                    <button class="edit-btn" onclick="editBalance(this, 'card')">Edit</button>
+                </div>
+                <div class="amount">$${cardBalance.toFixed(2)}</div>
+            `;
+            document.getElementById('credit-cards-list').appendChild(cardDiv);
+
+            updateTotal('card-total', cardTotal);
+
+            document.getElementById('card-name').value = '';
+            document.getElementById('card-bank').value = '';
+            document.getElementById('card-balance').value = '';
+            toggleForm('add-card-form');
+
+            // Save balance for this user
+            saveBalance(cardName, cardBalance);
+        }
+
+        function updateTotal(elementId, total) {
+            document.getElementById(elementId).innerText = `$${total.toFixed(2)}`;
+        }
+
+        function editBalance(button, type) {
+            const amountDiv = button.parentElement.nextElementSibling;
+            const currentBalance = parseFloat(amountDiv.innerText.replace('$', ''));
+            const newBalance = prompt('Enter new balance:', currentBalance);
+
+            if (newBalance !== null && !isNaN(newBalance)) {
+                const difference = parseFloat(newBalance) - currentBalance;
+                amountDiv.innerText = `$${parseFloat(newBalance).toFixed(2)}`;
+
+                if (type === 'bank') {
+                    bankTotal += difference;
+                    updateTotal('bank-total', bankTotal);
+                } else if (type === 'card') {
+                    cardTotal += difference;
+                    updateTotal('card-total', cardTotal);
+                }
+
+                // Update saved balance for this user
+                const balanceName = button.parentElement.firstElementChild.innerText;
+                saveBalance(balanceName, parseFloat(newBalance));
+            }
+        }
+
+        function saveBalance(name, balance) {
+            localStorage.setItem(name, balance);
+        }
+    </script>
+</body>
+</html>

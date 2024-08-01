@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackify Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #ffe6f7, #fff0f5);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        .container {
+            background: linear-gradient(to right, #18ffff, #00e6ff, #00c4ff, #00a2ff, #0080ff);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        button {
+            background-color: #6a00ff;
+            color: white;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #8000ff;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .logo {
+            font-family: 'Chewy', cursive;
+            font-size: 2rem;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">Trackify</div>
+    <div class="container">
+        <h2>2 Factor Authentication</h2>
+        <form id="2faForm">
+            <p>Please enter the 2FA code:</p>
+            <input type="text" id="2faCode" placeholder="Enter code" required>
+            <button type="submit">Confirm</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById("2faForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            window.location.href = "dashboard.html";
+        });
+    </script>
+</body>
+</html>

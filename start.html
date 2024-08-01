@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackify</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+        }
+        .logo {
+            font-family: 'Chewy', cursive;
+            font-size: 2rem;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .btn-login {
+            background: linear-gradient(to right, #ff9a9e, #fecfef);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 100px; /* Adjusted for better spacing */
+        }
+        .text-content {
+            max-width: 50%;
+        }
+        .text-content h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 62.1px;
+            font-weight: 600;
+        }
+        .text-content p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        .text-content .btn-signup {
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 50px;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        .card-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 50px; /* Adjusted for smaller screens */
+            }
+            .text-content, .card-image {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Trackify</div>
+        <a href="login.html" class="btn-login">Login</a>
+        <div class="main-content">
+            <div class="text-content">
+                <h1>Combine your transactions easier</h1>
+                <p>Combine your transactions using linkage of bank accounts, for cash transactions manually file them, and use Trackify Wallet for a better cashless solution!</p>
+                <a href="signup.html" class="btn-signup">Sign Up →</a>
+            </div>
+            <div class="card-image">
+                <img src="CardHand.png">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
